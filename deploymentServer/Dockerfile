@@ -13,8 +13,6 @@ WORKDIR /app/server
 COPY . .
 RUN npm install
 
-RUN mkdir "/etc/nginx"
-
 COPY start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
 

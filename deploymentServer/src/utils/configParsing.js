@@ -22,7 +22,7 @@ const findCurrentRed = async (filePath) => {
       throw new Error("could not find red env line");
     }
   } catch (err) {
-    throw new Error("could not read file");
+    throw new Error("could not read nginx.conf file");
   }
 };
 
@@ -47,7 +47,7 @@ const findTestRoute = async (filePath) => {
     console.log(`test route exists is ${testRouteExists}`);
     return testRouteExists;
   } catch (err) {
-    throw new Error("could not read file");
+    throw new Error("could not read nginx.conf file");
   }
 };
 
