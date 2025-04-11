@@ -1,9 +1,8 @@
-const fs = require("fs");
 const { exec } = require("child_process");
 
-const runAnsiblePlaybook = async (env, testRoute) => {
+const runAnsiblePlaybook = async (env, testRoute, tag) => {
   return new Promise((resolve, reject) => {
-    const command = `ansible-playbook /app/server/render_nginx_template.yaml -e "red_env=${env}" -e "enable_test_route=${testRoute}"`;
+    const command = `ansible-playbook /app/server/render_nginx_template.yaml -e "red_env=${env}" -e "enable_test_route=${testRoute}" --tags ${tag}`;
 
     exec(command, (error, stdout, stderr) => {
       if (error) {
@@ -21,6 +20,9 @@ const runAnsiblePlaybook = async (env, testRoute) => {
   });
 };
 
+const runBackendPlaybook = (env, testRoute) =>
+  runAnsiblePlaybook(env, testRoute, "backend");
+
 module.exports = {
-  runAnsiblePlaybook,
+  runBackendPlaybook,
 };
