@@ -1,12 +1,12 @@
 
-# Redirect all traffic to the web server on port 8000
+# Redirect all traffic to the web server on port 4000
 location /api {
     rewrite ^/api(/.*)$ $1 break;
 
     {% if red_env == 'alpha' %}
-    proxy_pass http://backend-alpha:8000; #red
+    proxy_pass http://backend-alpha:4000; #red
     {% else %}
-    proxy_pass http://backend-omega:8000; #red
+    proxy_pass http://backend-omega:4000; #red
     {% endif %}
     proxy_set_header Host $host;
     proxy_set_header X-Real-IP $remote_addr;
@@ -20,9 +20,9 @@ location /api/test {
     rewrite ^/api/test(/.*)$ $1 break;
 
     {% if red_env == 'alpha' %}
-    proxy_pass http://backend-omega:8000;
+    proxy_pass http://backend-omega:4000;
     {% else %}
-    proxy_pass http://backend-alpha:8000;
+    proxy_pass http://backend-alpha:4000;
     {% endif %}
     proxy_set_header Host $host;
     proxy_set_header X-Real-IP $remote_addr;

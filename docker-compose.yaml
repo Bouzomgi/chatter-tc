@@ -5,10 +5,10 @@ services:
       context: ./deploymentServer
     image: deployment-server:latest
     volumes:
-      - app-nginx-config:/etc/nginx
+      - chatter-nginx-config:/etc/nginx
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
-      - app-network
+      - chatter-network
 
   traffic-controller:
     container_name: traffic-controller
@@ -17,11 +17,11 @@ services:
       deployment-server:
         condition: service_healthy
     volumes:
-      - app-nginx-config:/etc/nginx
+      - chatter-nginx-config:/etc/nginx
     ports:
       - 80:80
     networks:
-      - app-network
+      - chatter-network
 
   frontend-alpha:
     container_name: frontend-alpha
@@ -29,20 +29,30 @@ services:
       context: ./microServer
     image: micro-server:latest
     networks:
-      - app-network
+      - chatter-network
 
   backend-alpha:
     container_name: backend-alpha
-    build:
-      context: ./microServer
-    image: micro-server:latest
+    image: bouzomgi/chatter-be
+    environment:
+      - PORT=${PORT}
+      - DATABASE_URL=${DATABASE_URL}
+      - STORAGE_BUCKET_NAME=${STORAGE_BUCKET_NAME}
+      - AWS_S3_ENDPOINT=${AWS_S3_ENDPOINT}
+      - AWS_S3_URL_SIGNER_ENDPOINT=${AWS_S3_URL_SIGNER_ENDPOINT}
+      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - TOKEN_SECRET=${TOKEN_SECRET}
+      - FRONTEND_ENDPOINTS=${FRONTEND_ENDPOINTS}
+    ports:
+      - 4000:4000
     networks:
-      - app-network
+      - chatter-network
 
 networks:
-  app-network:
-    name: app-network
-    driver: bridge
+  chatter-network:
+    external: true
 
 volumes:
-  app-nginx-config:
+  chatter-nginx-config:

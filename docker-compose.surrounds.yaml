@@ -1,0 +1,24 @@
+include:
+  - docker-compose.prod.yaml
+
+services:
+  localstack:
+    image: localstack/localstack
+    ports:
+      - '4566:4566'
+    environment:
+      - SERVICES=s3
+      - DEBUG=1
+      - USE_SSL=1
+    volumes:
+      - ./localstack/scripts/ready:/etc/localstack/init/ready.d
+      - ./localstack/scripts/init-scripts:/etc/localstack/init-scripts
+      - ./localstack/content:/content
+      - ./volume:/var/lib/localstack
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - chatter-network
+
+networks:
+  chatter-network:
+    external: true
