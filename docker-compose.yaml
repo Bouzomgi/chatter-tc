@@ -16,6 +16,10 @@ services:
     depends_on:
       deployment-server:
         condition: service_healthy
+      frontend-alpha:
+        condition: service_healthy
+      backend-alpha:
+        condition: service_healthy
     volumes:
       - chatter-nginx-config:/etc/nginx
     ports:
@@ -25,9 +29,9 @@ services:
 
   frontend-alpha:
     container_name: frontend-alpha
-    build:
-      context: ./microServer
-    image: micro-server:latest
+    image: bouzomgi/chatter-fe
+    ports:
+      - 8000:80
     networks:
       - chatter-network
 

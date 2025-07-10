@@ -1,30 +1,28 @@
+server {
+    listen 80;
+    server_name frontend.local;
 
-# Redirect all traffic to the web server on port 8000
-location / {
+  # Redirect all traffic to the web server on port 80
+  location / {
+    include /etc/nginx/conf.d/api-proxy.conf;
     {% if red_env == 'alpha' %}
     proxy_pass http://frontend-alpha:8000; #red
     {% else %}
     proxy_pass http://frontend-omega:8000; #red
     {% endif %}
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header X-Forwarded-Proto $scheme;
-}
+  }
 
-{% if enable_test_route == 'true' %}
-location /test {
+  {% if enable_test_route == 'true' %}
+  location /test {
     # Remove the /test prefix from the URL
     rewrite ^/test(/.*)$ $1 break;
+    include /etc/nginx/conf.d/api-proxy.conf;
 
     {% if red_env == 'alpha' %}
     proxy_pass http://frontend-omega:8000;
     {% else %}
     proxy_pass http://frontend-alpha:8000;
     {% endif %}
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header X-Forwarded-Proto $scheme;
+  }
+  {% endif %}
 }
-{% endif %}
