@@ -1,0 +1,23 @@
+map "" $frontendRed {
+  {% if red_env == 'alpha' %}
+    default http://frontend-alpha:80;
+  {% else %}
+    default http://frontend-omega:80;
+  {% endif %}
+}
+
+map "" $frontendBlack {
+  {% if red_env == 'alpha' %}
+    default http://frontend-omega:80;
+  {% else %}
+    default http://frontend-alpha:80;
+  {% endif %}
+}
+
+map "" $enableFrontendTestRoute {
+  {% if enable_test_route == 'true' %}
+    default 1;
+  {% else %}
+    default 0;
+  {% endif %}
+}

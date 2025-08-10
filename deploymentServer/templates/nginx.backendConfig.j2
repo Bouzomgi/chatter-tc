@@ -1,0 +1,23 @@
+map "" $backendRed {
+  {% if red_env == 'alpha' %}
+    default http://backend-alpha:4000;
+  {% else %}
+    default http://backend-omega:4000;
+  {% endif %}
+}
+
+map "" $backendBlack {
+  {% if red_env == 'alpha' %}
+    default http://backend-omega:4000;
+  {% else %}
+    default http://backend-alpha:4000;
+  {% endif %}
+}
+
+map "" $enableBackendTestRoute {
+  {% if enable_test_route == 'true' %}
+    default 0;
+  {% else %}
+    default 1;
+  {% endif %}
+}

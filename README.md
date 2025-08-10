@@ -18,4 +18,4 @@ GOALS:
 4. Repeat with chatter-fe
 
 COMMAND
-`docker compose -f docker-compose.yaml -f ../chatter-be/docker-compose.surrounds.yaml --env-file .env.docker up`
+`docker compose -f docker-compose.yaml -f docker-compose.surrounds.yaml --env-file .env.docker up`

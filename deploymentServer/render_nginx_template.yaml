@@ -23,11 +23,11 @@
     - name: Render the frontend Jinja template
       tags: [frontend]
       template:
-        src: templates/nginx.frontend.j2
-        dest: /etc/nginx/conf.d/frontend.conf
+        src: templates/nginx.frontendConfig.j2
+        dest: /etc/nginx/conf.d/frontendConfig.conf
 
     - name: Render the backend Jinja template
       tags: [backend]
       template:
-        src: templates/nginx.backend.j2
-        dest: /etc/nginx/conf.d/backend.conf
+        src: templates/nginx.backendConfig.j2
+        dest: /etc/nginx/conf.d/backendConfig.conf
