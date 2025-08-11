@@ -1,8 +1,6 @@
 services:
   deployment-server:
     container_name: deployment-server
-    build:
-      context: ./deploymentServer
     image: deployment-server:latest
     volumes:
       - chatter-nginx-config:/etc/nginx
