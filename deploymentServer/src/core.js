@@ -9,7 +9,6 @@ const {
 
 const { runBackendPlaybook } = require("./utils/ansible");
 
-const nginxRoute = "/etc/nginx/nginx.conf";
 const backendNginxRoute = "/etc/nginx/conf.d/backend.conf";
 const imageName = "micro-server";
 const networkName = "app-network";

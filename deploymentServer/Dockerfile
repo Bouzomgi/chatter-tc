@@ -16,9 +16,11 @@ RUN npm install
 COPY start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
 
-EXPOSE 8000
+ENV PORT=8001
+
+EXPOSE 8001
 
 HEALTHCHECK --interval=5s --timeout=5s --retries=3 \
-  CMD curl --fail http://localhost:8000/deployment/health || exit 1
+  CMD curl --fail http://localhost:8001/deployment/health || exit 1
 
 CMD ["/usr/local/bin/start.sh"]

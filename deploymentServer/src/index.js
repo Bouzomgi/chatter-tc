@@ -3,7 +3,7 @@ const { authenticateToken } = require("./authenticateToken");
 const { deployBlack, switchTraffic, destroyBlack } = require("./core");
 
 const app = express();
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8001;
 
 // health check route
 app.get("/deployment/health", (req, res) => {
